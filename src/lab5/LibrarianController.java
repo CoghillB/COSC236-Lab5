@@ -3,9 +3,9 @@ package lab5;
 public class LibrarianController {
 	
 	Library library; // Library dependency
-	
+
 	public LibrarianController( ) {
-		this.library = new Library(); // Constructor injection
+		this.library = new Library();
 	}
 	public Library getLibrary() {
 		return this.library;
@@ -36,7 +36,7 @@ public class LibrarianController {
 			System.out.println("Member " + name + " not found.");
 	}
 	public void showBook(String title) {
-		PaperBook book = library.findBookByTitle(title);
+		Book book = library.findBookByTitle(title);
 		if (book != null)
 			System.out.println(book);
 		else 
@@ -45,14 +45,14 @@ public class LibrarianController {
 	public void showMemberBooks(String name) {
 		Member member = library.findMemberByName(name);
 		if (member != null)
-			member.listBorrowedBooks();
+			member.getBorrowedBooks();
 		else 
 			System.out.println("Member " + name + " not found.");
 	}
 	
 	public void borrowBookByMember(String title, String name) {
 		Member member = library.findMemberByName(name); // use library for search
-		PaperBook book = library.findBookByTitle(title);  // use library for search
+		Book book = library.findBookByTitle(title);  // use library for search
 		if (book != null && member != null)
 			member.borrowBook(book); // member borrows a book, not library 
 		else 	
@@ -61,7 +61,7 @@ public class LibrarianController {
 	
 	public void returnBookByMember(String title, String name) {
 		Member member = library.findMemberByName(name); // use library for search
-		PaperBook book = library.findBookByTitle(title); // use library for search
+		Book book = library.findBookByTitle(title); // use library for search
 		if (book != null && member != null)
 			member.returnBook(book); // members returns book. 
 		else  	

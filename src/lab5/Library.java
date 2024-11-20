@@ -1,9 +1,11 @@
 package lab5;
+
 import java.util.*;
 
 public class Library {
     private Map<String, Book> books = new HashMap<>();
     private List<Member> members = new ArrayList<>();
+
 
     public void addBook(Book book) {
         books.put(book.getTitle(), book);
@@ -21,11 +23,17 @@ public class Library {
         return books.get(title);
     }
 
+    public void showBooks() {
+        for (Book book : books.values()) {
+            System.out.println(book);
+        }
+    }
+
     public int booksCount() {
         return books.size();
     }
 
-    // Methods for managing members
+
     public void addMember(Member member) {
         members.add(member);
     }
@@ -39,15 +47,21 @@ public class Library {
     }
 
     public Member findMemberByName(String name) {
+        return members.stream()
+                .filter(member -> member.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void showMembers() {
         for (Member member : members) {
-            if (member.getName().equals(name)) {
-                return member;
-            }
+            System.out.println(member);
         }
-        return null;
     }
 
     public int membersCount() {
         return members.size();
     }
+
+
 }

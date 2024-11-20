@@ -68,7 +68,7 @@ class TestAddRemoveBooks {
 
         assertEquals(member.borrowedBooksCount(), 1, "The book should stay with member"); //
 
-        PaperBook b = (PaperBook) member.getBorrowedBooks().getFirst(); // the only book
+        PaperBook b = member.getBorrowedBooks(); // the only book
         assertEquals(b, book1, "The owned book should be the removed book");
     }
 

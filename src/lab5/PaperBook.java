@@ -1,5 +1,7 @@
 package lab5;
 
+import java.util.Objects;
+
 public class PaperBook implements Book {
     //implements interface Book
     private String title;
@@ -33,5 +35,20 @@ public class PaperBook implements Book {
     @Override
     public boolean getIsAvailable() {
         return isAvailable;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof PaperBook))
+            return false;
+        PaperBook other = (PaperBook) obj;
+        return title.equals(other.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 }
