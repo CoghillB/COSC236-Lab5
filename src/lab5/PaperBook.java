@@ -21,6 +21,11 @@ public class PaperBook implements Book {
     }
 
     @Override
+    public boolean isAvailable() {
+        return false;
+    }
+
+    @Override
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }

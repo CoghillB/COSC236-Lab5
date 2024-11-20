@@ -1,72 +1,53 @@
 package lab5;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import java.util.*;
 
 public class Library {
-	 
-	private ArrayList<PaperBook> catalog = new ArrayList<>(); // Book dependency
-	private ArrayList<Member> members = new ArrayList<>(); // Member dependency
-	
-	public Member findMemberByName(String name) {
-		 for (Member member : members) {
-	           if (member.getName().equals(name)) {
-	               return member; // Return the found member
-	           }
-	       }
-	       return null; // Return null if not found
-	}
-	public PaperBook findBookByTitle (String title) {
-		 for (PaperBook book : catalog) {
-	           if (book.getTitle().equals(title)) {
-	               return book; // Return the found book
-	           }
-	       }
-	       return null; // Return null if not found
-	}
-	public void addMember(Member member) {
-		members.add(member);
-	}
-	public void addBook(PaperBook book) {
-		catalog.add(book);
-	}
-	public void removeMember(String name) {
-		Member member = findMemberByName(name);
-		removeMember(member);
-	}
-	public void removeMember(Member member) {
-		if(member != null) {
-			member.returnAllBooks(); // return all member's books to the library
-			members.remove(member);
-		}
-	}
-	public void removeBook(String title) {
-		PaperBook book = findBookByTitle(title);
-		removeBook(book);
-	}
-	public void removeBook(PaperBook book) {
-		if (book != null)
-			catalog.remove(book); // book stays with the member who has it
-	}
-	public void showMembers() {
-		Iterator<Member> memberIterator = members.iterator();
-	    while(memberIterator.hasNext()) {
-		   	 Member member = memberIterator.next();
-		   	 System.out.println(member);
-	    }
-	}
-	public void showBooks() {
-		Iterator<PaperBook> bookIterator = catalog.iterator();
-	    while(bookIterator.hasNext()) {
-		   	 PaperBook book = bookIterator.next();
-		   	 System.out.println(book); // book.toString()
-	    }
-	}
-	public int booksCount() {
-		return catalog.size();
-	}
-	public int membersCount() {
-		return members.size();
-	}
+    private Map<String, Book> books = new HashMap<>();
+    private List<Member> members = new ArrayList<>();
+
+    public void addBook(Book book) {
+        books.put(book.getTitle(), book);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book.getTitle());
+    }
+
+    public void removeBook(String title) {
+        books.remove(title);
+    }
+
+    public Book findBookByTitle(String title) {
+        return books.get(title);
+    }
+
+    public int booksCount() {
+        return books.size();
+    }
+
+    // Methods for managing members
+    public void addMember(Member member) {
+        members.add(member);
+    }
+
+    public void removeMember(Member member) {
+        members.remove(member);
+    }
+
+    public void removeMember(String name) {
+        members.removeIf(m -> m.getName().equals(name));
+    }
+
+    public Member findMemberByName(String name) {
+        for (Member member : members) {
+            if (member.getName().equals(name)) {
+                return member;
+            }
+        }
+        return null;
+    }
+
+    public int membersCount() {
+        return members.size();
+    }
 }
