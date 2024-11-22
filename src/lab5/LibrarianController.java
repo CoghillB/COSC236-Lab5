@@ -3,9 +3,15 @@ package lab5;
 public class LibrarianController {
 	
 	Library library; // Library dependency
+	BookFactory PaperBookFactory;
+	BookFactory AudioBookFactory;
+	BookFactory EbookFactory;
 
 	public LibrarianController( ) {
 		this.library = new Library();
+		this. PaperBookFactory = new PaperBookFactory();
+		this.AudioBookFactory = new AudioBookFactory();
+		this.EbookFactory = new EbookFactory();
 	}
 	public Library getLibrary() {
 		return this.library;
@@ -67,4 +73,5 @@ public class LibrarianController {
 		else  	
 			System.out.println("Either book " + title + " or member " + name + " not found.");
 	}
+	
 }
