@@ -1,4 +1,5 @@
+package lab5;
 
 public abstract class BookFactory {
-	public abstract Book createBook(String name);
+    public abstract Book createBook(String name);
 }
