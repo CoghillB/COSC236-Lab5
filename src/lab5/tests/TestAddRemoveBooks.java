@@ -3,11 +3,14 @@ package lab5.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import lab5.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import lab5.Library;
 import lab5.PaperBook;
 import lab5.Member;
+
+import java.util.List;
 
 
 class TestAddRemoveBooks {
@@ -68,7 +71,7 @@ class TestAddRemoveBooks {
 
         assertEquals(member.borrowedBooksCount(), 1, "The book should stay with member"); //
 
-        PaperBook b = member.getBorrowedBooks(); // the only book
+        List<Book> b = member.getBorrowedBooks(); // the only book
         assertEquals(b, book1, "The owned book should be the removed book");
     }
 

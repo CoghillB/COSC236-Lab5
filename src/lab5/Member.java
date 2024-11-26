@@ -20,6 +20,8 @@ public class Member {
         if (book != null) {
             this.borrowedBooks.add(book);
             System.out.println("Book " + book.getTitle() + " borrowed by " + this.name);
+        } else {
+            System.out.println("Cannot borrow a null book.");
         }
     }
 
@@ -27,15 +29,17 @@ public class Member {
         if (book != null) {
             this.borrowedBooks.remove(book);
             System.out.println("Book " + book.getTitle() + " returned by " + this.name);
+        } else {
+            System.out.println("Cannot return a null book.");
         }
     }
 
-    public PaperBook getBorrowedBooks() {
+    public List<Book> getBorrowedBooks() {
         System.out.println("Books borrowed by " + this.name + ":");
         for (Book book : borrowedBooks) {
-            System.out.println(book);
+            System.out.println(book.getTitle());
         }
-        return null;
+        return borrowedBooks;
     }
 
     @Override
