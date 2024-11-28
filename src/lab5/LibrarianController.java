@@ -6,8 +6,10 @@ public class LibrarianController {
 	PaperBookFactory PaperBookFactory;
     AudioBookFactory AudioBookFactory;
     EbookFactory EbookFactory;
+	BorrowingServiceAPI borrowingService;
 
 	public LibrarianController( ) {
+		this.borrowingService = BorrowingService.getInstance();
 		this.library = new Library();
 		this.PaperBookFactory = new PaperBookFactory();
 		this.AudioBookFactory = new AudioBookFactory();
@@ -37,7 +39,7 @@ public class LibrarianController {
 		} 
 	
 	public void addMember(String name) {
-		library.addMember(new Member(name)); // Member class constructor dependency
+		library.addMember(new Member(name, borrowingService)); // Member class constructor dependency
 	}
 	public void removeBook(String title) {
 		library.removeBook(title); // remove 

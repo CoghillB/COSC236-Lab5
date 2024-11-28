@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import lab5.AudioBook;
 import lab5.Book;
+import lab5.BorrowingService;
+import lab5.BorrowingServiceAPI;
 import lab5.Ebook;
 import lab5.Library;
 import lab5.PaperBook;
@@ -27,8 +29,8 @@ class TestAddRemoveBooks {
     PaperBook paperBook = new PaperBook("Dune");
     Ebook eBook = new Ebook("1984");
     AudioBook audioBook = new AudioBook("Moby Dick");
-
-    Member member = new Member("Grady Booch");
+    BorrowingServiceAPI borrowingService = BorrowingService.getInstance();
+    Member member = new Member("Grady Booch", borrowingService);
 
     @Test
     void AddBooks() {

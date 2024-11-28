@@ -39,7 +39,8 @@ public class Library {
     }
 
     public void removeMember(Member member) {
-        members.remove(member);
+    	members.remove(member);
+    	member.remove();
     }
 
     public void removeMember(String name) {

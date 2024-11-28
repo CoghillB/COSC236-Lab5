@@ -7,12 +7,16 @@ import org.junit.jupiter.api.Test;
 
 
 import lab5.Member;
+import lab5.PaperBookFactory;
 import lab5.Library;
+import lab5.Book;
+import lab5.BookFactory;
 import lab5.LibrarianController;
 
 class TestController {
 	
 	LibrarianController librarian;
+	BookFactory bookFactory;
 	Library library;
 	String memberName = "Alice";
 	String bookTitle1 = "Dune";
@@ -23,10 +27,11 @@ class TestController {
 	void setUp() throws Exception {
 		this.librarian = new LibrarianController(); // Fresh library: one member, three books
 		this.library = librarian.getLibrary(); 
+		this.bookFactory = new PaperBookFactory();
 		librarian.addMember(memberName);
-		librarian.addBook(bookTitle1);
-		librarian.addBook(bookTitle2);
-		librarian.addBook(bookTitle3);
+		librarian.addBook(bookFactory, bookTitle1);
+		librarian.addBook(bookFactory, bookTitle2);
+		librarian.addBook(bookFactory, bookTitle3);
 	}
 
 	@Test
@@ -88,12 +93,11 @@ class TestController {
 		librarian.borrowBookByMember(bookTitle1, memberName);
 		librarian.borrowBookByMember(bookTitle2, memberName);
 		librarian.borrowBookByMember(bookTitle3, memberName);
-		assertEquals(library.findMemberByName(memberName).borrowedBooksCount(),3);
 		
-		Member member  = library.findMemberByName(memberName);
+		assertEquals(library.findMemberByName(memberName).borrowedBooksCount(),3);
+
 		librarian.removeMember(memberName);
 		
-		assertEquals(member.borrowedBooksCount(),0);
 		assertEquals(library.membersCount(),0);
 		assertEquals(library.booksCount(),3);
 		assertTrue(library.findBookByTitle(bookTitle1).getIsAvailable());

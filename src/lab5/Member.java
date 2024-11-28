@@ -6,8 +6,10 @@ public class Member {
 
     private String name;
     private List<Book> borrowedBooks;
+    private BorrowingServiceAPI borrowingService;
 
-    public Member(String name) {
+    public Member(String name, BorrowingServiceAPI service) {
+    	this.borrowingService = service;
         this.name = name;
         this.borrowedBooks = new ArrayList<>();
     }
@@ -17,23 +19,34 @@ public class Member {
     }
 
     public void borrowBook(Book book) {
-        if (book != null) {
-            this.borrowedBooks.add(book);
-            book.setIsAvailable(false); 
-            System.out.println("Book " + book.getTitle() + " borrowed by " + this.name);
-        } else {
+    	BorrowingBookResult b = borrowingService.borrowBook(this, book);
+        if(b.getIsSuccess()) {
+        	System.out.println(b.getMessage());
+        	this.borrowedBooks.add(book);
+        if (book == null) {
             System.out.println("Cannot borrow a null book.");
         }
+       }
     }
 
     public void returnBook(Book book) {
-        if (book != null) {
-            this.borrowedBooks.remove(book);
-            book.setIsAvailable(true);
-            System.out.println("Book " + book.getTitle() + " returned by " + this.name);
-        } else {
-            System.out.println("Cannot return a null book.");
+        BorrowingBookResult b = borrowingService.returnBook(this, book);
+        if(b.getIsSuccess()) {
+        	System.out.println(b.getMessage());
+        	this.borrowedBooks.remove(book);
         }
+    }
+    
+    public void remove() {
+    	List<Book> temp = borrowedBooks;
+    	    temp.forEach(book -> {
+    	        borrowingService.returnBook(this, book);
+    	    });
+    	borrowedBooks.clear();
+    }
+    
+    public boolean hasBook(Book b) {
+        return this.borrowedBooks.contains(b);
     }
 
     public List<Book> getBorrowedBooks() {
@@ -67,4 +80,8 @@ public class Member {
     public double borrowedBooksCount() {
         return borrowedBooks.size();
     }
+
+	public BorrowingServiceAPI getBorrowingService() {
+		return borrowingService;
+	}
 }
