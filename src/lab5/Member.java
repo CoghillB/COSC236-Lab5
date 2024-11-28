@@ -19,6 +19,7 @@ public class Member {
     public void borrowBook(Book book) {
         if (book != null) {
             this.borrowedBooks.add(book);
+            book.setIsAvailable(false); 
             System.out.println("Book " + book.getTitle() + " borrowed by " + this.name);
         } else {
             System.out.println("Cannot borrow a null book.");
@@ -28,6 +29,7 @@ public class Member {
     public void returnBook(Book book) {
         if (book != null) {
             this.borrowedBooks.remove(book);
+            book.setIsAvailable(true);
             System.out.println("Book " + book.getTitle() + " returned by " + this.name);
         } else {
             System.out.println("Cannot return a null book.");
