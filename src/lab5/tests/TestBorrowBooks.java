@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import lab5.AudioBook;
+import lab5.Ebook;
 import lab5.Member;
 import lab5.PaperBook;
 
@@ -14,7 +16,8 @@ class TestBorrowBooks {
 	Member member2;
 	
 	PaperBook book1 = new PaperBook("Dune");
-	PaperBook book2 = new PaperBook("1984");
+	Ebook book2 = new Ebook("1984");
+	AudioBook book3 = new AudioBook("Moby Dick");
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -22,6 +25,7 @@ class TestBorrowBooks {
 		member2 = new Member("Bob");   // flush borrowedBook array 
 		book1.setIsAvailable(true);
 		book2.setIsAvailable(true);
+		book3.setIsAvailable(true);
 	}
 	@Test
 	void borrowBookBook() {
@@ -38,6 +42,12 @@ class TestBorrowBooks {
 		member1.borrowBook(book2);
 		assertFalse(book1.getIsAvailable(), "Book should not be available");
 		assertEquals(member1.borrowedBooksCount(), 2, "The book coubnt shoud be 2");
+		
+		//borrow third book
+		assertTrue(book3.getIsAvailable(), "Book 3 must be available");
+		member1.borrowBook(book3);
+		assertFalse(book3.getIsAvailable(), "Book 3 should not be available");
+		assertEquals(member1.borrowedBooksCount(), 3, "The book count should be 3");
 	}
 	
 	@Test
@@ -61,7 +71,10 @@ class TestBorrowBooks {
 		member1.returnBook(book2);
 		assertTrue(book2.getIsAvailable(), "Book should be available after return");
 		assertEquals(member1.borrowedBooksCount(), 0, "Member 1 should have no books");
+		//return third book
+		member1.returnBook(book3);
+		assertTrue(book3.getIsAvailable(), "Book should be available after return");
+		assertEquals(member1.borrowedBooksCount(), 0, "Member 1 should have no books");
 		
 	}
-
 }
