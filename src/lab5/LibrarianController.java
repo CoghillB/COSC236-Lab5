@@ -1,5 +1,8 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LibrarianController {
 	
 	Library library; // Library dependency
@@ -45,7 +48,19 @@ public class LibrarianController {
 		library.removeBook(title); // remove 
 	}
 	public void removeMember(String name) {
-		library.removeMember(name);
+		Member member = library.findMemberByName(name);
+
+		if (member != null) {
+			if (member.borrowedBooksCount() > 0) {
+				System.out.println("Member " + name + " has borrowed books. Returning books...");
+				List<Book> borrowedBooks = new ArrayList<>(member.getBorrowedBooks());
+				borrowedBooks.forEach(book -> member.returnBook(book));
+			}
+			library.removeMember(name);
+			System.out.println("Member " + name + " removed successfully.");
+		} else {
+			System.out.println("Member " + name + " not found.");
+		}
 	}
 	public void showMember(String name) {
 		Member member = library.findMemberByName(name);
